@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Context path="/Habitator">
+  <Resource auth="Container" driverClassName="org.apache.derby.jdbc.ClientDriver" name="jdbc/TestDB" password="user" type="javax.sql.DataSource" url="jdbc:derby://localhost:1527/sample;create=true" username="user"/>
+</Context>
