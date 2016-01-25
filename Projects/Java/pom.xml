@@ -1,296 +1,288 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
-	<modelVersion>4.0.0</modelVersion>
-	<artifactId>Habitator01</artifactId>
-	<packaging>war</packaging>
-	<version>0.0.1</version>
-	<name>Habitator01</name>
+    xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <artifactId>Habitator01</artifactId>
+    <packaging>war</packaging>
+    <version>0.0.1</version>
+    <name>Habitator01</name>
 
-	<properties>
-		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-	</properties>
+    <properties>
+	<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    </properties>
 
-	<build>
-		<plugins>
+    <build>
+	<plugins>
 
-			<!-- Plugin for addressing source encoding and JDK version issues -->
-			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-compiler-plugin</artifactId>
-				<version>2.0.2</version>
+	    <!-- Plugin for addressing source encoding and JDK version issues -->
+	    <plugin>
+		<groupId>org.apache.maven.plugins</groupId>
+		<artifactId>maven-compiler-plugin</artifactId>
+		<version>2.0.2</version>
 
-				<configuration>
-					<source>1.6</source>
-					<target>1.6</target>
-					<encoding>UTF-8</encoding>
-				</configuration>
-			</plugin>
+		<configuration>
+		    <source>1.6</source>
+		    <target>1.6</target>
+		    <encoding>UTF-8</encoding>
+		</configuration>
+	    </plugin>
 
-			
-			<!-- Plugin for addressing source encoding in tests issues -->
- 			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-resources-plugin</artifactId>
-				<version>2.6</version>
+	    
+	    <!-- Plugin for addressing source encoding in tests issues -->
+	    <plugin>
+		<groupId>org.apache.maven.plugins</groupId>
+		<artifactId>maven-resources-plugin</artifactId>
+		<version>2.6</version>
 
-				<configuration>
-					<encoding>UTF-8</encoding>
-				</configuration>
-			</plugin>
+		<configuration>
+		    <encoding>UTF-8</encoding>
+		</configuration>
+	    </plugin>
 
-			<plugin>
-				<groupId>org.codehaus.mojo</groupId>
-				<artifactId>tomcat-maven-plugin</artifactId>
+	    <plugin>
+		<groupId>org.codehaus.mojo</groupId>
+		<artifactId>tomcat-maven-plugin</artifactId>
 
-				<configuration>
-					<server>tomcat</server>
-					<url>http://localhost:8080/manager/text</url>
-					<username>tomcat</username>
-					<password>tomcat</password>
-				</configuration>
+		<configuration>
+		    <server>tomcat</server>
+		    <url>http://localhost:8080/manager/text</url>
+		    <username>tomcat</username>
+		    <password>tomcat</password>
+		</configuration>
 
-				<executions>
-					<execution>
-						<id>deploy</id>
-						<phase>integration-test</phase>
-						<goals>
-							<goal>redeploy</goal>
-						</goals>
-					</execution>
-				</executions>
-			</plugin>
+		<executions>
+		    <execution>
+			<id>deploy</id>
+			<phase>integration-test</phase>
+			<goals>
+			    <goal>redeploy</goal>
+			</goals>
+		    </execution>
+		</executions>
+	    </plugin>
 
-			<!-- Plugin for including web.xml to output war -->
-			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-war-plugin</artifactId>
-				<version>2.2</version>
+	    <!-- Plugin for including web.xml to output war -->
+	    <plugin>
+		<groupId>org.apache.maven.plugins</groupId>
+		<artifactId>maven-war-plugin</artifactId>
+		<version>2.2</version>
 
-				<configuration>
-					<webXml>src/main/webapp/WEB-INF/web.xml</webXml>
-					<failOnMissingWebXml>true</failOnMissingWebXml>
-				</configuration>
-			</plugin>
+		<configuration>
+		    <webXml>src/main/webapp/WEB-INF/web.xml</webXml>
+		    <failOnMissingWebXml>true</failOnMissingWebXml>
+		</configuration>
+	    </plugin>
 
-			<!-- Plugin for executing sql scripts at start and end of build process -->
+	    <!-- Plugin for executing sql scripts at start and end of build process -->
 <!--
- 			<plugin>
-				<groupId>org.codehaus.mojo</groupId>
-				<artifactId>sql-maven-plugin</artifactId>
-				<version>1.5</version>
-
-				<dependencies>
-					<dependency>
-						<groupId>org.apache.derby</groupId>
-						<artifactId>derbyclient</artifactId>
-						<version>10.4.2.0</version>
-					</dependency>
-				</dependencies>
-
-				<configuration>
-					<driver>org.apache.derby.jdbc.ClientDriver</driver>
-					<url>jdbc:derby://localhost:1527/sample;create=true</url>
-					<username>user</username>
-					<password>user</password>
-				</configuration>
-
-				<executions>
-
-					<execution>
-						<id>create-schema-before-test</id>
-						<phase>pre-integration-test</phase>
-						<goals>
-							<goal>execute</goal>
-						</goals>
-						<configuration>
-							<autocommit>true</autocommit>
-							<srcFiles>
-								<srcFile>target/classes/create_schema.sql</srcFile>
-							</srcFiles>
-						</configuration>
-					</execution>
-
-					<execution>
-						<id>populate-db-data-before-test</id>
-						<phase>pre-integration-test</phase>
-						<goals>
-							<goal>execute</goal>
-						</goals>
-						<configuration>
-							<autocommit>true</autocommit>
-							<srcFiles>
-								<srcFile>target/classes/populate_data.sql</srcFile>
-							</srcFiles>
-						</configuration>
-					</execution>
-
-					<execution>
-						<id>drop-db-after-test</id>
-						<phase>post-integration-test</phase>
-						<goals>
-							<goal>execute</goal>
-						</goals>
-						<configuration>
-							<autocommit>true</autocommit>
-							<srcFiles>
-								<srcFile>target/classes/drop_schema.sql</srcFile>
-							</srcFiles>
-						</configuration>
-					</execution>
-				</executions>
-			
-			</plugin>
--->
-			<!-- Separating the unit tests from the integration tests. -->
-			<!-- Plugin for executing system tests. It let fail build process if tests break up -->
-<!--
-			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-failsafe-plugin</artifactId>
-				<version>2.12.2</version>
-
-				<configuration>
-					<encoding>UTF-8</encoding>
--->
- 					<!-- Skip execution at predefined time. We define other time ourself. -->
-<!--
-					<skip>true</skip>
-				</configuration>
-
-				<executions>
-					<execution>
-						<id>run-integration-tests</id>
-						<phase>integration-test</phase>
-						<goals>
-							<goal>integration-test</goal>
-						</goals>
-						<configuration>
-							<encoding>UTF-8</encoding>
-							<skip>false</skip>
-							<includes>
-								<include>system/*.java</include>
-							</includes>
-						</configuration>
-					</execution>
-					<execution>
-						<id>break-if-tests-fail</id>
-						<phase>post-integration-test</phase>
-						<goals>
-							<goal>verify</goal>
-						</goals>
-						<configuration>
-							<skip>false</skip>
-						</configuration>
-					</execution>
-				</executions>
-			</plugin> 
--->
-			<!-- Separating the unit tests from the integration tests. -->
-			<!-- Plugin for executing unit tests. -->
- 			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-surefire-plugin</artifactId>
-				<configuration>
-					<!-- Skip execution at predefined time. We define other time ourself. -->				
-					<skip>true</skip>
-				</configuration>
-				
-				<executions>
-					<execution>
-						<id>run-unit-tests</id>
-						<phase>test</phase>
-						<goals>
-							<goal>test</goal>
-						</goals>
-						<configuration>
-							<skip>false</skip>
-							<includes>
-								<include>unit/*.java</include>
-							</includes>
-						</configuration>
-					</execution>
-				</executions>
-			</plugin> 
-			
-			<plugin>
-			    <groupId>org.eluder.coveralls</groupId>
-			    <artifactId>coveralls-maven-plugin</artifactId>
-			    <version>4.1.0</version>
-			    <configuration>
-			        <repoToken>veyBbac9wNr6srLBDrP7CsbexEnXNzP1c</repoToken>
-			    </configuration>
-			</plugin>
-
-			<plugin>
-				<groupId>org.jacoco</groupId>
-				<artifactId>jacoco-maven-plugin</artifactId>
-				<version>0.7.2.201409121644</version>
-				<!-- The following exclude configuration was added because error occurred 
-					when executing "mvn clean test jacoco:report coveralls:report" -->
-				<!-- [ERROR] Failed to execute goal org.eluder.coveralls:coveralls-maven-plugin:3.1.0:report 
-					(default-cli) on project java-design-patterns: I/O operation failed: No source 
-					found for domainapp/dom/modules/simple/QSimpleObject.java -> [Help 1] -->
-			</plugin>
-			
-	                <plugin>
-	                    <groupId>org.codehaus.mojo</groupId>
-	                    <artifactId>cobertura-maven-plugin</artifactId>
-	                    <version>2.6</version>
-	                    <configuration>
-	                        <check>true</check>
-	                        <format>xml</format>
-	                        <aggregate>true</aggregate>
-	                    </configuration>
-	                </plugin>
-	            
-		</plugins>
-	</build>
-
-	<dependencies>
-		<dependency>
-			<groupId>junit</groupId>
-			<artifactId>junit</artifactId>
-			<version>4.8.1</version>
-			<scope>test</scope>
-		</dependency>
-
-		<dependency>
-			<groupId>javax</groupId>
-			<artifactId>javaee-web-api</artifactId>
-			<version>6.0</version>
-			<scope>provided</scope>
-		</dependency>
-
-		<dependency>
+	    <plugin>
+		<groupId>org.codehaus.mojo</groupId>
+		<artifactId>sql-maven-plugin</artifactId>
+		<version>1.5</version>
+		<dependencies>
+		    <dependency>
 			<groupId>org.apache.derby</groupId>
 			<artifactId>derbyclient</artifactId>
 			<version>10.4.2.0</version>
-		</dependency>
+		    </dependency>
+		</dependencies>
+		<configuration>
+		    <driver>org.apache.derby.jdbc.ClientDriver</driver>
+		    <url>jdbc:derby://localhost:1527/sample;create=true</url>
+		    <username>user</username>
+		    <password>user</password>
+		</configuration>
+		<executions>
+		    <execution>
+			<id>create-schema-before-test</id>
+			<phase>pre-integration-test</phase>
+			<goals>
+			    <goal>execute</goal>
+			</goals>
+			<configuration>
+			    <autocommit>true</autocommit>
+			    <srcFiles>
+				<srcFile>target/classes/create_schema.sql</srcFile>
+			    </srcFiles>
+			</configuration>
+		    </execution>
+		    <execution>
+			<id>populate-db-data-before-test</id>
+			<phase>pre-integration-test</phase>
+			<goals>
+			    <goal>execute</goal>
+			</goals>
+			<configuration>
+			    <autocommit>true</autocommit>
+			    <srcFiles>
+				<srcFile>target/classes/populate_data.sql</srcFile>
+			    </srcFiles>
+			</configuration>
+		    </execution>
+		    <execution>
+			<id>drop-db-after-test</id>
+			<phase>post-integration-test</phase>
+			<goals>
+			    <goal>execute</goal>
+			</goals>
+			<configuration>
+			    <autocommit>true</autocommit>
+			    <srcFiles>
+				<srcFile>target/classes/drop_schema.sql</srcFile>
+			    </srcFiles>
+			</configuration>
+		    </execution>
+		</executions>
+	    
+	    </plugin>
+-->
+	    <!-- Separating the unit tests from the integration tests. -->
+	    <!-- Plugin for executing system tests. It let fail build process if tests break up -->
+<!--
+	    <plugin>
+		<groupId>org.apache.maven.plugins</groupId>
+		<artifactId>maven-failsafe-plugin</artifactId>
+		<version>2.12.2</version>
+		<configuration>
+		    <encoding>UTF-8</encoding>
+-->
+		    <!-- Skip execution at predefined time. We define other time ourself. -->
+<!--
+		    <skip>true</skip>
+		</configuration>
+		<executions>
+		    <execution>
+			<id>run-integration-tests</id>
+			<phase>integration-test</phase>
+			<goals>
+			    <goal>integration-test</goal>
+			</goals>
+			<configuration>
+			    <encoding>UTF-8</encoding>
+			    <skip>false</skip>
+			    <includes>
+				<include>system/*.java</include>
+			    </includes>
+			</configuration>
+		    </execution>
+		    <execution>
+			<id>break-if-tests-fail</id>
+			<phase>post-integration-test</phase>
+			<goals>
+			    <goal>verify</goal>
+			</goals>
+			<configuration>
+			    <skip>false</skip>
+			</configuration>
+		    </execution>
+		</executions>
+	    </plugin> 
+-->
+	    <!-- Separating the unit tests from the integration tests. -->
+	    <!-- Plugin for executing unit tests. -->
+	    <plugin>
+		<groupId>org.apache.maven.plugins</groupId>
+		<artifactId>maven-surefire-plugin</artifactId>
+		<configuration>
+		    <!-- Skip execution at predefined time. We define other time ourself. -->				
+		    <skip>true</skip>
+		</configuration>
+		
+		<executions>
+		    <execution>
+			<id>run-unit-tests</id>
+			<phase>test</phase>
+			<goals>
+			    <goal>test</goal>
+			</goals>
+			<configuration>
+			    <skip>false</skip>
+			    <includes>
+				<include>unit/*.java</include>
+			    </includes>
+			</configuration>
+		    </execution>
+		</executions>
+	    </plugin> 
+	    
+	    <plugin>
+	        <groupId>org.eluder.coveralls</groupId>
+	        <artifactId>coveralls-maven-plugin</artifactId>
+	        <version>4.1.0</version>
+	        <configuration>
+	            <repoToken>veyBbac9wNr6srLBDrP7CsbexEnXNzP1c</repoToken>
+	        </configuration>
+	    </plugin>
 
-		<dependency>
-			<groupId>javax.servlet</groupId>
-			<artifactId>jstl</artifactId>
-			<version>1.2</version>
-		</dependency>
+	    <plugin>
+		<groupId>org.jacoco</groupId>
+		<artifactId>jacoco-maven-plugin</artifactId>
+		<version>0.7.2.201409121644</version>
+		<!-- The following exclude configuration was added because error occurred 
+		    when executing "mvn clean test jacoco:report coveralls:report" -->
+		<!-- [ERROR] Failed to execute goal org.eluder.coveralls:coveralls-maven-plugin:3.1.0:report 
+		    (default-cli) on project java-design-patterns: I/O operation failed: No source 
+		    found for domainapp/dom/modules/simple/QSimpleObject.java -> [Help 1] -->
+	    </plugin>
+	    
+                    <plugin>
+                        <groupId>org.codehaus.mojo</groupId>
+                        <artifactId>cobertura-maven-plugin</artifactId>
+                        <version>2.6</version>
+                        <configuration>
+                            <check>true</check>
+                            <format>xml</format>
+                            <aggregate>true</aggregate>
+                        </configuration>
+                    </plugin>
+                
+	</plugins>
+    </build>
 
-		<dependency>
-			<groupId>org.mockito</groupId>
-			<artifactId>mockito-all</artifactId>
-			<version>1.9.5-rc1</version>
-		</dependency>
-		<dependency>
-			<groupId>org.easytesting</groupId>
-			<artifactId>fest-assert</artifactId>
-			<version>1.4</version>
-		</dependency>
+    <dependencies>
+	<dependency>
+	    <groupId>junit</groupId>
+	    <artifactId>junit</artifactId>
+	    <version>4.8.1</version>
+	    <scope>test</scope>
+	</dependency>
 
-		<dependency>
-			<groupId>org.seleniumhq.selenium</groupId>
-			<artifactId>selenium-java</artifactId>
-			<version>2.46.0</version>
-			<scope>test</scope>
-		</dependency>
-	</dependencies>
+	<dependency>
+	    <groupId>javax</groupId>
+	    <artifactId>javaee-web-api</artifactId>
+	    <version>6.0</version>
+	    <scope>provided</scope>
+	</dependency>
 
-	<groupId>com.acme</groupId>
+	<dependency>
+	    <groupId>org.apache.derby</groupId>
+	    <artifactId>derbyclient</artifactId>
+	    <version>10.4.2.0</version>
+	</dependency>
+
+	<dependency>
+	    <groupId>javax.servlet</groupId>
+	    <artifactId>jstl</artifactId>
+	    <version>1.2</version>
+	</dependency>
+
+	<dependency>
+	    <groupId>org.mockito</groupId>
+	    <artifactId>mockito-all</artifactId>
+	    <version>1.9.5-rc1</version>
+	</dependency>
+	<dependency>
+	    <groupId>org.easytesting</groupId>
+	    <artifactId>fest-assert</artifactId>
+	    <version>1.4</version>
+	</dependency>
+
+	<dependency>
+	    <groupId>org.seleniumhq.selenium</groupId>
+	    <artifactId>selenium-java</artifactId>
+	    <version>2.46.0</version>
+	    <scope>test</scope>
+	</dependency>
+    </dependencies>
+
+    <groupId>com.acme</groupId>
 </project>
