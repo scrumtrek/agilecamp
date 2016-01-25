@@ -1,4 +1,6 @@
 language: java
+notifications:
+  email: false
 sudo: false
 install: true
 script: cd Projects/Java && mvn clean compile test
