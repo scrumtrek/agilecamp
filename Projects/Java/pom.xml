@@ -22,6 +22,7 @@
 				</configuration>
 			</plugin>
 
+			
 			<!-- Plugin for addressing source encoding in tests issues -->
  			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
